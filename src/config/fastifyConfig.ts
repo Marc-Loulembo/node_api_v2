@@ -41,5 +41,5 @@ export interface FastifyConfig {
 }
 
 export const fastifyConfig: FastifyConfig = {
-  port: 3001,
+  port: process.env.API_PORT ? parseInt(process.env.API_PORT) : 3001,
 };
