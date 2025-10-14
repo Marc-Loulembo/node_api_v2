@@ -15,7 +15,8 @@ const developmentCorsConfig: CorsConfig = {
     'Accept',
     'Authorization',
     'Cache-Control',
-    'Pragma'
+    'Pragma',
+    'Authorization'
   ],
   credentials: true,
   optionsSuccessStatus: 200
@@ -34,7 +35,8 @@ const productionCorsConfig: CorsConfig = {
     'Accept',
     'Authorization',
     'Cache-Control',
-    'Pragma'
+    'Pragma',
+    'Authorization'
   ],
   credentials: true,
   optionsSuccessStatus: 200
@@ -50,7 +52,8 @@ const testCorsConfig: CorsConfig = {
     'Accept',
     'Authorization',
     'Cache-Control',
-    'Pragma'
+    'Pragma',
+    'Authorization'
   ],
   credentials: true,
   optionsSuccessStatus: 200
