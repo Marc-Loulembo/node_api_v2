@@ -1,4 +1,5 @@
 import { fastify, fastifyConfig } from "./config/fastifyConfig.js";
+import { registerPlugins } from "./config/plugins.js";
 import { autoLoadRoutes } from "./utils/autoLoad.js";
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
@@ -8,6 +9,9 @@ const __dirname = dirname(__filename);
 
 export const startServer = async (): Promise<void> => {
   try {
+    // Enregistrer les plugins (CORS, etc.)
+    await registerPlugins(fastify);
+
     // Auto-load des routes
     const routesDir = join(__dirname, 'routes');
     const count = await autoLoadRoutes(routesDir);
