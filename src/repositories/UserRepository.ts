@@ -1,11 +1,12 @@
 import { User } from '../models/User.js';
 import { User as PrismaUser } from '@prisma/client';
-import { UserCreateData, UserUpdateData, UserFindOptions, UserFindAllResult } from '../models/User.js';
-
-export interface UserValidationResult {
-  isValid: boolean;
-  errors: string[];
-}
+import {
+  UserCreateData,
+  UserUpdateData,
+  UserFindOptions,
+  UserFindAllResult,
+  UserValidationResult
+} from '../types/index.js';
 
 export class UserRepository {
   static async findById(id: string | number): Promise<PrismaUser | null> {

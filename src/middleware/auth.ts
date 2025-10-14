@@ -1,13 +1,6 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyReply } from 'fastify';
 import { verifyToken } from '../utils/jwt.js';
-
-export interface AuthenticatedRequest extends FastifyRequest {
-  user?: {
-    userId: number;
-    email: string;
-    name: string;
-  };
-}
+import { AuthenticatedRequest } from '../types/index.js';
 
 export const authenticateToken = async (request: AuthenticatedRequest, reply: FastifyReply): Promise<void> => {
   try {

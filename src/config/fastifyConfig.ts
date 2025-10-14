@@ -1,4 +1,5 @@
 import Fastify, { FastifyInstance, FastifyServerOptions } from "fastify";
+import { FastifyConfig } from '../types/index.js';
 
 export const fastify: FastifyInstance = Fastify({
   logger: {
@@ -35,10 +36,6 @@ export const fastify: FastifyInstance = Fastify({
   }
 } as FastifyServerOptions);
 
-export interface FastifyConfig {
-  port: number;
-  host?: string;
-}
 
 export const fastifyConfig: FastifyConfig = {
   port: process.env.API_PORT ? parseInt(process.env.API_PORT) : 3001,

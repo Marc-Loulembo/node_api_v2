@@ -1,11 +1,13 @@
 import { Post } from '../models/Post.js';
 import { Post as PrismaPost } from '@prisma/client';
-import { PostCreateData, PostUpdateData, PostFindOptions, PostFindAllResult, PostWithAuthor } from '../models/Post.js';
-
-export interface PostValidationResult {
-  isValid: boolean;
-  errors: string[];
-}
+import {
+  PostCreateData,
+  PostUpdateData,
+  PostFindOptions,
+  PostFindAllResult,
+  PostWithAuthor,
+  PostValidationResult
+} from '../types/index.js';
 
 export class PostRepository {
   static async findById(id: string | number): Promise<PostWithAuthor | null> {

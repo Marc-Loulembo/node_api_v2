@@ -1,29 +1,15 @@
-import { PostRepository } from "../repositories/PostRepository.js";
 import { FastifyRequest, FastifyReply } from 'fastify';
-import { PostFindOptions, PostCreateData, PostUpdateData } from '../models/Post.js';
-
-export interface PostQueryParams {
-  page?: string;
-  limit?: string;
-}
-
-export interface PostRequestBody {
-  id?: string | number;
-  title?: string;
-  content?: string;
-  authorId?: string | number;
-}
-
-export interface PostResponse {
-  message?: string;
-  error?: string;
-  details?: string[];
-}
-
-export interface ErrorResponse {
-  error: string;
-  details?: string[];
-}
+import { PostRepository } from "../repositories/PostRepository.js";
+import {
+  PostQueryParams,
+  PostRequestBody,
+  PostResponse,
+  ErrorResponse,
+  PostController,
+  PostFindOptions,
+  PostCreateData,
+  PostUpdateData
+} from '../types/index.js';
 
 export const getPosts = async (request: FastifyRequest<{ Querystring: PostQueryParams }>, reply: FastifyReply): Promise<any> => {
   try {

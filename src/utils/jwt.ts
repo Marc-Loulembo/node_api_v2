@@ -1,16 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { JWT_CONFIG } from '../config/jwt.js';
-
-export interface TokenPayload {
-  userId: number;
-  email: string;
-  name: string;
-}
-
-export interface RefreshTokenPayload {
-  userId: number;
-  type: 'refresh';
-}
+import { TokenPayload, RefreshTokenPayload } from '../types/index.js';
 
 export const createToken = (payload: TokenPayload): string => {
   // @ts-ignore - JWT types issue

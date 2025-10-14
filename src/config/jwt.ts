@@ -1,8 +1,4 @@
-export interface JwtConfig {
-  secret: string;
-  expiresIn: string;
-  refreshExpiresIn: string;
-}
+import { JwtConfig } from '../types/index.js';
 
 export const JWT_CONFIG: JwtConfig = {
   secret: process.env.JWT_SECRET || 'votre-secret-super-securise-changez-moi',

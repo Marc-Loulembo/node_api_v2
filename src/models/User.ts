@@ -1,35 +1,12 @@
 import { prisma } from '../lib/prisma.js';
 import { User as PrismaUser } from '@prisma/client';
-
-export interface UserCreateData {
-  email: string;
-  name: string;
-  password: string;
-}
-
-export interface UserUpdateData {
-  email?: string;
-  name?: string;
-  password?: string;
-}
-
-export interface UserFindOptions {
-  page?: number;
-  limit?: number;
-  orderBy?: string;
-}
-
-export interface UserPagination {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
-export interface UserFindAllResult {
-  users: Omit<PrismaUser, 'password'>[];
-  pagination: UserPagination;
-}
+import {
+  UserCreateData,
+  UserUpdateData,
+  UserFindOptions,
+  UserPagination,
+  UserFindAllResult
+} from '../types/index.js';
 
 export class User {
   static async findById(id: string | number): Promise<PrismaUser | null> {

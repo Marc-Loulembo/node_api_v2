@@ -1,42 +1,13 @@
 import { prisma } from '../lib/prisma.js';
 import { Post as PrismaPost, User as PrismaUser } from '@prisma/client';
-
-export interface PostCreateData {
-  title: string;
-  content: string;
-  authorId: string | number;
-}
-
-export interface PostUpdateData {
-  title?: string;
-  content?: string;
-}
-
-export interface PostFindOptions {
-  page?: number;
-  limit?: number;
-  orderBy?: string;
-}
-
-export interface PostPagination {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
-export interface PostWithAuthor extends Omit<PrismaPost, 'authorId'> {
-  author: {
-    id: number;
-    name: string;
-    email: string;
-  };
-}
-
-export interface PostFindAllResult {
-  posts: PostWithAuthor[];
-  pagination: PostPagination;
-}
+import {
+  PostCreateData,
+  PostUpdateData,
+  PostFindOptions,
+  PostPagination,
+  PostWithAuthor,
+  PostFindAllResult
+} from '../types/index.js';
 
 export class Post {
   static async findById(id: string | number): Promise<PostWithAuthor | null> {

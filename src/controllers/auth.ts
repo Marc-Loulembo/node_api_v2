@@ -1,40 +1,19 @@
 import bcrypt from 'bcryptjs';
 import { prisma } from '../lib/prisma.js';
-import { FastifyRequest, FastifyReply } from 'fastify';
 import { createToken, createRefreshToken, verifyToken } from '../utils/jwt.js';
+import {
+  LoginRequest,
+  RegisterRequest,
+  RefreshTokenRequest,
+  AuthResponse,
+  ErrorResponse,
+  LoginController,
+  RegisterController,
+  LogoutController,
+  RefreshTokenController
+} from '../types/index.js';
 
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface RegisterRequest {
-  email: string;
-  password: string;
-  name: string;
-}
-
-export interface RefreshTokenRequest {
-  refreshToken: string;
-}
-
-export interface AuthResponse {
-  message: string;
-  token?: string;
-  refreshToken?: string;
-  user?: {
-    id: number;
-    email: string;
-    name: string;
-  };
-}
-
-export interface ErrorResponse {
-  error: string;
-  details?: string[];
-}
-
-export const login = async (request: FastifyRequest<{ Body: LoginRequest }>, reply: FastifyReply): Promise<void> => {
+export const login: LoginController = async (request, reply) => {
   try {
     const { email, password } = request.body;
 
@@ -93,7 +72,7 @@ export const login = async (request: FastifyRequest<{ Body: LoginRequest }>, rep
   }
 };
 
-export const register = async (request: FastifyRequest<{ Body: RegisterRequest }>, reply: FastifyReply): Promise<void> => {
+export const register: RegisterController = async (request, reply) => {
   try {
     const { email, password, name } = request.body;
 
@@ -148,13 +127,13 @@ export const register = async (request: FastifyRequest<{ Body: RegisterRequest }
   }
 };
 
-export const logout = async (request: FastifyRequest, reply: FastifyReply): Promise<{ message: string }> => {
+export const logout: LogoutController = async (request, reply) => {
   return {
     message: 'Déconnexion réussie'
   };
 };
 
-export const refreshToken = async (request: FastifyRequest<{ Body: RefreshTokenRequest }>, reply: FastifyReply): Promise<void> => {
+export const refreshToken: RefreshTokenController = async (request, reply) => {
   try {
     const { refreshToken } = request.body;
 
