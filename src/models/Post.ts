@@ -1,9 +1,47 @@
 import { prisma } from '../lib/prisma.js';
+import { Post as PrismaPost, User as PrismaUser } from '@prisma/client';
+
+export interface PostCreateData {
+  title: string;
+  content: string;
+  authorId: string | number;
+}
+
+export interface PostUpdateData {
+  title?: string;
+  content?: string;
+}
+
+export interface PostFindOptions {
+  page?: number;
+  limit?: number;
+  orderBy?: string;
+}
+
+export interface PostPagination {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface PostWithAuthor extends Omit<PrismaPost, 'authorId'> {
+  author: {
+    id: number;
+    name: string;
+    email: string;
+  };
+}
+
+export interface PostFindAllResult {
+  posts: PostWithAuthor[];
+  pagination: PostPagination;
+}
 
 export class Post {
-  static async findById(id) {
+  static async findById(id: string | number): Promise<PostWithAuthor | null> {
     return await prisma.post.findUnique({
-      where: { id: parseInt(id) },
+      where: { id: parseInt(id.toString()) },
       include: {
         author: {
           select: {
@@ -16,12 +54,12 @@ export class Post {
     });
   }
 
-  static async create(data) {
+  static async create(data: PostCreateData): Promise<PostWithAuthor> {
     return await prisma.post.create({
       data: {
         title: data.title,
         content: data.content,
-        authorId: parseInt(data.authorId)
+        authorId: parseInt(data.authorId.toString())
       },
       include: {
         author: {
@@ -35,9 +73,9 @@ export class Post {
     });
   }
 
-  static async update(id, data) {
+  static async update(id: string | number, data: PostUpdateData): Promise<PostWithAuthor> {
     return await prisma.post.update({
-      where: { id: parseInt(id) },
+      where: { id: parseInt(id.toString()) },
       data: {
         title: data.title,
         content: data.content
@@ -54,13 +92,13 @@ export class Post {
     });
   }
 
-  static async delete(id) {
+  static async delete(id: string | number): Promise<PrismaPost> {
     return await prisma.post.delete({
-      where: { id: parseInt(id) }
+      where: { id: parseInt(id.toString()) }
     });
   }
 
-  static async findAll(options = {}) {
+  static async findAll(options: PostFindOptions = {}): Promise<PostFindAllResult> {
     const { page = 1, limit = 10, orderBy = 'createdAt' } = options;
 
     const [posts, total] = await Promise.all([
@@ -92,12 +130,12 @@ export class Post {
     };
   }
 
-  static async findByAuthor(authorId, options = {}) {
+  static async findByAuthor(authorId: string | number, options: PostFindOptions = {}): Promise<PostFindAllResult> {
     const { page = 1, limit = 10 } = options;
 
     const [posts, total] = await Promise.all([
       prisma.post.findMany({
-        where: { authorId: parseInt(authorId) },
+        where: { authorId: parseInt(authorId.toString()) },
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { createdAt: 'desc' },
@@ -112,7 +150,7 @@ export class Post {
         }
       }),
       prisma.post.count({
-        where: { authorId: parseInt(authorId) }
+        where: { authorId: parseInt(authorId.toString()) }
       })
     ]);
 

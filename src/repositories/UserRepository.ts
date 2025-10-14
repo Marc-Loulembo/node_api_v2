@@ -1,32 +1,39 @@
 import { User } from '../models/User.js';
+import { User as PrismaUser } from '@prisma/client';
+import { UserCreateData, UserUpdateData, UserFindOptions, UserFindAllResult } from '../models/User.js';
+
+export interface UserValidationResult {
+  isValid: boolean;
+  errors: string[];
+}
 
 export class UserRepository {
-  static async findById(id) {
+  static async findById(id: string | number): Promise<PrismaUser | null> {
     return await User.findById(id);
   }
 
-  static async findByEmail(email) {
+  static async findByEmail(email: string): Promise<PrismaUser | null> {
     return await User.findByEmail(email);
   }
 
-  static async create(userData) {
+  static async create(userData: UserCreateData): Promise<PrismaUser> {
     return await User.create(userData);
   }
 
-  static async update(id, userData) {
+  static async update(id: string | number, userData: UserUpdateData): Promise<PrismaUser> {
     return await User.update(id, userData);
   }
 
-  static async delete(id) {
+  static async delete(id: string | number): Promise<PrismaUser> {
     return await User.delete(id);
   }
 
-  static async findAll(options = {}) {
+  static async findAll(options: UserFindOptions = {}): Promise<UserFindAllResult> {
     return await User.findAll(options);
   }
 
-  static async validateUserData(userData) {
-    const errors = [];
+  static async validateUserData(userData: Partial<UserCreateData>): Promise<UserValidationResult> {
+    const errors: string[] = [];
 
     if (!userData.email) {
       errors.push('Email requis');

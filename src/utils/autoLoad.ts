@@ -1,7 +1,7 @@
 import { readdir, stat } from 'fs/promises';
 import { join, extname } from 'path';
 
-export async function autoLoadRoutes(routesDir) {
+export async function autoLoadRoutes(routesDir: string): Promise<number> {
   const files = await getFiles(routesDir);
 
   for (const file of files) {
@@ -11,8 +11,8 @@ export async function autoLoadRoutes(routesDir) {
   return files.length;
 }
 
-async function getFiles(dir) {
-  const files = [];
+async function getFiles(dir: string): Promise<string[]> {
+  const files: string[] = [];
   const entries = await readdir(dir);
 
   for (const entry of entries) {
@@ -21,7 +21,7 @@ async function getFiles(dir) {
 
     if (stats.isDirectory()) {
       files.push(...await getFiles(fullPath));
-    } else if (extname(entry) === '.js') {
+    } else if (extname(entry) === '.js' || extname(entry) === '.ts') {
       files.push(fullPath);
     }
   }

@@ -1,6 +1,6 @@
-import Fastify from "fastify";
+import Fastify, { FastifyInstance, FastifyServerOptions } from "fastify";
 
-export const fastify = Fastify({
+export const fastify: FastifyInstance = Fastify({
   logger: {
     transport: {
       target: 'pino-pretty',
@@ -33,8 +33,13 @@ export const fastify = Fastify({
       }
     }
   }
-});
+} as FastifyServerOptions);
 
-export const fastifyConfig = {
+export interface FastifyConfig {
+  port: number;
+  host?: string;
+}
+
+export const fastifyConfig: FastifyConfig = {
   port: 3001,
 };
