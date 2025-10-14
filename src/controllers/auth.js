@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { JWT_CONFIG } from '../config/jwt.js';
-import { users } from '../repositories/users.js';
+import { prisma } from '../lib/prisma.js';
 
 
 export const login = async (request, reply) => {
@@ -14,7 +14,11 @@ export const login = async (request, reply) => {
       });
     }
 
-    const user = users.find(u => u.email === email);
+    // Recherche de l'utilisateur avec Prisma
+    const user = await prisma.user.findUnique({
+      where: { email }
+    });
+
     if (!user) {
       return reply.status(401).send({
         error: 'Identifiants invalides'
