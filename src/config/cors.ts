@@ -16,7 +16,9 @@ const developmentCorsConfig: CorsConfig = {
     'Authorization',
     'Cache-Control',
     'Pragma',
-    'Authorization'
+    'Authorization',
+    'X-CSRF-Token',
+    'X-CSRFToken'
   ],
   credentials: true,
   optionsSuccessStatus: 200
@@ -36,7 +38,9 @@ const productionCorsConfig: CorsConfig = {
     'Authorization',
     'Cache-Control',
     'Pragma',
-    'Authorization'
+    'Authorization',
+    'X-CSRF-Token',
+    'X-CSRFToken'
   ],
   credentials: true,
   optionsSuccessStatus: 200
@@ -53,7 +57,9 @@ const testCorsConfig: CorsConfig = {
     'Authorization',
     'Cache-Control',
     'Pragma',
-    'Authorization'
+    'Authorization',
+    'X-CSRF-Token',
+    'X-CSRFToken'
   ],
   credentials: true,
   optionsSuccessStatus: 200
