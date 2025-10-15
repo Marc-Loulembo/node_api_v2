@@ -10,7 +10,8 @@ import {
   LoginController,
   RegisterController,
   LogoutController,
-  RefreshTokenController
+  RefreshTokenController,
+  MeController
 } from '../types/index.js';
 
 export const login: LoginController = async (request, reply) => {
@@ -177,6 +178,36 @@ export const refreshToken: RefreshTokenController = async (request, reply) => {
   } catch (error) {
     reply.status(401).send({
       error: 'Refresh token invalide'
+    });
+  }
+};
+
+export const me: MeController = async (request, reply) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: request.user?.userId },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true
+      }
+    });
+
+    if (!user) {
+      reply.status(404).send({
+        error: 'Utilisateur non trouvé'
+      });
+      return;
+    }
+
+    reply.send({
+      message: 'Profil utilisateur',
+      user
+    });
+  } catch (error) {
+    reply.status(500).send({
+      error: 'Erreur interne du serveur'
     });
   }
 };

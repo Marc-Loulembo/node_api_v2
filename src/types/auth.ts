@@ -38,6 +38,7 @@ export type LoginController = (request: FastifyRequest<{ Body: LoginRequest }>, 
 export type RegisterController = (request: FastifyRequest<{ Body: RegisterRequest }>, reply: FastifyReply) => Promise<void>;
 export type LogoutController = (request: FastifyRequest, reply: FastifyReply) => Promise<{ message: string }>;
 export type RefreshTokenController = (request: FastifyRequest<{ Body: RefreshTokenRequest }>, reply: FastifyReply) => Promise<void>;
+export type MeController = (request: AuthenticatedRequest, reply: FastifyReply) => Promise<void>;
 
 // Interface pour les requêtes authentifiées
 export interface AuthenticatedRequest extends FastifyRequest {

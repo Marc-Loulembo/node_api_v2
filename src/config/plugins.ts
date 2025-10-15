@@ -13,12 +13,9 @@ export const registerPlugins = async (fastify: FastifyInstance): Promise<void> =
     parseOptions: {}
   });
 
-  // Enregistrer le plugin CSRF Protection
-  await fastify.register(import('@fastify/csrf-protection'), {
-    sessionPlugin: '@fastify/cookie',
-    cookieOpts: csrfConfig.cookieOpts
-  });
+  // Enregistrer le plugin CSRF Protection (temporairement désactivé)
+  // await fastify.register(import('@fastify/csrf-protection'));
 
   // Log de confirmation
-  fastify.log.info('🔧 Plugins enregistrés : CORS, Cookie, CSRF Protection');
+  fastify.log.info('🔧 Plugins enregistrés : CORS, Cookie');
 };
