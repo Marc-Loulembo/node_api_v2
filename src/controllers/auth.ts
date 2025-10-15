@@ -18,13 +18,6 @@ export const login: LoginController = async (request, reply) => {
   try {
     const { email, password } = request.body;
 
-    if (!email || !password) {
-      reply.status(400).send({
-        error: 'Email et mot de passe requis'
-      });
-      return;
-    }
-
     // Recherche de l'utilisateur avec Prisma
     const user = await prisma.user.findUnique({
       where: { email }
@@ -76,13 +69,6 @@ export const login: LoginController = async (request, reply) => {
 export const register: RegisterController = async (request, reply) => {
   try {
     const { email, password, name } = request.body;
-
-    if (!email || !password || !name) {
-      reply.status(400).send({
-        error: 'Email, mot de passe et nom requis'
-      });
-      return;
-    }
 
     // Vérifier si l'utilisateur existe déjà
     const existingUser = await prisma.user.findUnique({
@@ -137,13 +123,6 @@ export const logout: LogoutController = async (request, reply) => {
 export const refreshToken: RefreshTokenController = async (request, reply) => {
   try {
     const { refreshToken } = request.body;
-
-    if (!refreshToken) {
-      reply.status(400).send({
-        error: 'Refresh token requis'
-      });
-      return;
-    }
 
     const decoded = verifyToken(refreshToken);
 

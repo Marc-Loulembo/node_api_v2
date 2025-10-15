@@ -35,7 +35,15 @@ export const fastify: FastifyInstance = Fastify({
       }
     }
   },
-  ajv: new Ajv({ removeAdditional: true }),
+  ajv: {
+    customOptions: {
+      removeAdditional: true,       // Supprime les propriétés supplémentaires
+      useDefaults: true,            // Utilise les valeurs par défaut
+      coerceTypes: true,            // Convertit automatiquement les types
+      allErrors: true,              // Retourne toutes les erreurs
+      verbose: true                 // Messages d'erreur détaillés
+    }
+  },
 } as FastifyServerOptions);
 
 
