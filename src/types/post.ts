@@ -5,11 +5,13 @@ export interface PostCreateData {
   title: string;
   content: string;
   authorId: string | number;
+  categoryId: string | number;
 }
 
 export interface PostUpdateData {
   title?: string;
   content?: string;
+  categoryId?: string | number;
 }
 
 export interface PostFindOptions {
@@ -25,11 +27,16 @@ export interface PostPagination {
   totalPages: number;
 }
 
-export interface PostWithAuthor extends Omit<PrismaPost, 'authorId'> {
-  author: {
+export interface PostWithAuthor extends Omit<PrismaPost, 'authorId' | 'categoryId'> {
+  authors: {
     id: number;
     name: string;
     email: string;
+  };
+  category: {
+    id: number;
+    name: string;
+    description: string | null;
   };
 }
 
@@ -54,6 +61,7 @@ export interface PostRequestBody {
   title?: string;
   content?: string;
   authorId?: string | number;
+  categoryId?: string | number;
 }
 
 export interface PostResponse {

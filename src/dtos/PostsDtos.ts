@@ -6,7 +6,7 @@
 export const createPostSchema = {
   body: {
     type: 'object',
-    required: ['title', 'content'],
+    required: ['title', 'content', 'categoryId'],
     properties: {
       title: {
         type: 'string',
@@ -16,6 +16,9 @@ export const createPostSchema = {
       content: {
         type: 'string',
         minLength: 1
+      },
+      categoryId: {
+        type: 'number'
       }
     }
   },
@@ -27,6 +30,7 @@ export const createPostSchema = {
         title: { type: 'string' },
         content: { type: 'string' },
         authorId: { type: 'number' },
+        categoryId: { type: 'number' },
         createdAt: { type: 'string', format: 'date-time' },
         updatedAt: { type: 'string', format: 'date-time' }
       }
@@ -49,6 +53,9 @@ export const updatePostSchema = {
       content: {
         type: 'string',
         minLength: 1
+      },
+      categoryId: {
+        type: 'number'
       }
     }
   },
@@ -60,6 +67,7 @@ export const updatePostSchema = {
         title: { type: 'string' },
         content: { type: 'string' },
         authorId: { type: 'number' },
+        categoryId: { type: 'number' },
         createdAt: { type: 'string', format: 'date-time' },
         updatedAt: { type: 'string', format: 'date-time' }
       }
@@ -85,12 +93,20 @@ export const getPostSchema = {
         title: { type: 'string' },
         content: { type: 'string' },
         authorId: { type: 'number' },
-        author: {
+        authors: {
           type: 'object',
           properties: {
             id: { type: 'number' },
             name: { type: 'string' },
             email: { type: 'string' }
+          }
+        },
+        category: {
+          type: 'object',
+          properties: {
+            id: { type: 'number' },
+            name: { type: 'string' },
+            description: { type: 'string' }
           }
         },
         createdAt: { type: 'string', format: 'date-time' },
@@ -126,12 +142,20 @@ export const getPostsSchema = {
               title: { type: 'string' },
               content: { type: 'string' },
               authorId: { type: 'number' },
-              author: {
+              authors: {
                 type: 'object',
                 properties: {
                   id: { type: 'number' },
                   name: { type: 'string' },
                   email: { type: 'string' }
+                }
+              },
+              category: {
+                type: 'object',
+                properties: {
+                  id: { type: 'number' },
+                  name: { type: 'string' },
+                  description: { type: 'string' }
                 }
               },
               createdAt: { type: 'string', format: 'date-time' },
@@ -173,14 +197,3 @@ export const deletePostSchema = {
   }
 };
 
-/**
- * Schéma pour les erreurs communes
- */
-export const errorSchema = {
-  type: 'object',
-  properties: {
-    error: { type: 'string' },
-    message: { type: 'string' },
-    statusCode: { type: 'number' }
-  }
-};

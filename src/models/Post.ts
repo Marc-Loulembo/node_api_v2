@@ -14,11 +14,18 @@ export class Post {
     return await prisma.post.findUnique({
       where: { id: parseInt(id.toString()) },
       include: {
-        author: {
+        authors: {
           select: {
             id: true,
             name: true,
             email: true
+          }
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+            description: true
           }
         }
       }
@@ -30,14 +37,22 @@ export class Post {
       data: {
         title: data.title,
         content: data.content,
-        authorId: parseInt(data.authorId.toString())
+        authorId: parseInt(data.authorId.toString()),
+        categoryId: parseInt(data.categoryId.toString())
       },
       include: {
-        author: {
+        authors: {
           select: {
             id: true,
             name: true,
             email: true
+          }
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+            description: true
           }
         }
       }
@@ -49,14 +64,22 @@ export class Post {
       where: { id: parseInt(id.toString()) },
       data: {
         title: data.title,
-        content: data.content
+        content: data.content,
+        ...(data.categoryId && { categoryId: parseInt(data.categoryId.toString()) })
       },
       include: {
-        author: {
+        authors: {
           select: {
             id: true,
             name: true,
             email: true
+          }
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+            description: true
           }
         }
       }
@@ -78,11 +101,18 @@ export class Post {
         take: limit,
         orderBy: { [orderBy]: 'desc' },
         include: {
-          author: {
+          authors: {
             select: {
               id: true,
               name: true,
               email: true
+            }
+          },
+          category: {
+            select: {
+              id: true,
+              name: true,
+              description: true
             }
           }
         }
@@ -111,11 +141,18 @@ export class Post {
         take: limit,
         orderBy: { createdAt: 'desc' },
         include: {
-          author: {
+          authors: {
             select: {
               id: true,
               name: true,
               email: true
+            }
+          },
+          category: {
+            select: {
+              id: true,
+              name: true,
+              description: true
             }
           }
         }
