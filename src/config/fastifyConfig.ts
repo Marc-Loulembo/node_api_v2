@@ -53,6 +53,33 @@ export const fastify: FastifyInstance = Fastify({
   },
 } as FastifyServerOptions);
 
+// Configuration Swagger/OpenAPI
+export const swaggerConfig = {
+  openapi: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API Node REST',
+      description: 'API REST pour la gestion des posts et catégories',
+      version: '1.0.0'
+    },
+    servers: [
+      {
+        url: 'http://localhost:3001',
+        description: 'Serveur de développement'
+      }
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http' as const,
+          scheme: 'bearer' as const,
+          bearerFormat: 'JWT'
+        }
+      }
+    }
+  }
+};
+
 
 export const fastifyConfig: FastifyConfig = {
   port: process.env.API_PORT ? parseInt(process.env.API_PORT) : 3001,

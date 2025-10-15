@@ -4,6 +4,9 @@
  * Schéma pour créer un nouveau post
  */
 export const createPostSchema = {
+  tags: ['posts'],
+  description: 'Créer un nouveau post',
+  security: [{ bearerAuth: [] }],
   body: {
     type: 'object',
     required: ['title', 'content', 'categoryId'],
@@ -42,6 +45,9 @@ export const createPostSchema = {
  * Schéma pour mettre à jour un post
  */
 export const updatePostSchema = {
+  tags: ['posts'],
+  description: 'Mettre à jour un post existant',
+  security: [{ bearerAuth: [] }],
   body: {
     type: 'object',
     properties: {
@@ -120,6 +126,8 @@ export const getPostSchema = {
  * Schéma pour la liste des posts
  */
 export const getPostsSchema = {
+  tags: ['posts'],
+  description: 'Récupérer la liste des posts avec pagination',
   querystring: {
     type: 'object',
     properties: {
@@ -175,6 +183,9 @@ export const getPostsSchema = {
  * Schéma pour supprimer un post
  */
 export const deletePostSchema = {
+  tags: ['posts'],
+  description: 'Supprimer un post',
+  security: [{ bearerAuth: [] }],
   params: {
     type: 'object',
     properties: {

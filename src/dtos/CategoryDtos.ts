@@ -4,6 +4,9 @@
  * Schéma pour créer une nouvelle catégorie
  */
 export const createCategorySchema = {
+  tags: ['categories'],
+  description: 'Créer une nouvelle catégorie',
+  security: [{ bearerAuth: [] }],
   body: {
     type: 'object',
     required: ['name'],
@@ -11,11 +14,13 @@ export const createCategorySchema = {
       name: {
         type: 'string',
         minLength: 1,
-        maxLength: 100
+        maxLength: 100,
+        description: 'Nom de la catégorie'
       },
       description: {
         type: 'string',
-        maxLength: 500
+        maxLength: 500,
+        description: 'Description de la catégorie'
       }
     }
   },
@@ -37,6 +42,9 @@ export const createCategorySchema = {
  * Schéma pour mettre à jour une catégorie
  */
 export const updateCategorySchema = {
+  tags: ['categories'],
+  description: 'Mettre à jour une catégorie existante',
+  security: [{ bearerAuth: [] }],
   body: {
     type: 'object',
     properties: {
@@ -69,6 +77,8 @@ export const updateCategorySchema = {
  * Schéma pour récupérer une catégorie
  */
 export const getCategorySchema = {
+  tags: ['categories'],
+  description: 'Récupérer une catégorie par son ID',
   params: {
     type: 'object',
     properties: {
@@ -104,6 +114,8 @@ export const getCategorySchema = {
  * Schéma pour la liste des catégories
  */
 export const getCategoriesSchema = {
+  tags: ['categories'],
+  description: 'Récupérer la liste des catégories avec pagination',
   querystring: {
     type: 'object',
     properties: {
@@ -157,6 +169,9 @@ export const getCategoriesSchema = {
  * Schéma pour supprimer une catégorie
  */
 export const deleteCategorySchema = {
+  tags: ['categories'],
+  description: 'Supprimer une catégorie',
+  security: [{ bearerAuth: [] }],
   params: {
     type: 'object',
     properties: {
@@ -183,6 +198,9 @@ export const deleteCategorySchema = {
  * Schéma pour récupérer les posts d'une catégorie
  */
 export const getCategoryPostsSchema = {
+  tags: ['categories'],
+  description: 'Récupérer les posts d\'une catégorie',
+  security: [{ bearerAuth: [] }],
   params: {
     type: 'object',
     properties: {
