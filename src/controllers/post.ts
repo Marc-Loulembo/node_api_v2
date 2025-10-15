@@ -11,9 +11,9 @@ import {
   PostUpdateData
 } from '../types/index.js';
 
-export const getPosts = async (request: FastifyRequest<{ Querystring: PostQueryParams }>, reply: FastifyReply): Promise<any> => {
+export const getPosts = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
   try {
-    const { page = '1', limit = '10' } = request.query;
+    const { page = '1', limit = '10' } = request.query as PostQueryParams;
     const options: PostFindOptions = {
       page: parseInt(page),
       limit: parseInt(limit)
@@ -29,9 +29,9 @@ export const getPosts = async (request: FastifyRequest<{ Querystring: PostQueryP
   }
 };
 
-export const createPost = async (request: FastifyRequest<{ Body: PostRequestBody }>, reply: FastifyReply): Promise<any> => {
+export const createPost = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
   try {
-    const postData = request.body;
+    const postData = request.body as PostRequestBody;
 
     // Validation des données
     const validation = await PostRepository.validatePostData(postData);
@@ -52,9 +52,9 @@ export const createPost = async (request: FastifyRequest<{ Body: PostRequestBody
   }
 };
 
-export const updatePost = async (request: FastifyRequest<{ Body: PostRequestBody }>, reply: FastifyReply): Promise<any> => {
+export const updatePost = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
   try {
-    const { id, ...postData } = request.body;
+    const { id, ...postData } = request.body as PostRequestBody;
 
     if (!id) {
       return reply.status(400).send({
@@ -81,9 +81,9 @@ export const updatePost = async (request: FastifyRequest<{ Body: PostRequestBody
   }
 };
 
-export const deletePost = async (request: FastifyRequest<{ Body: { id: string | number } }>, reply: FastifyReply): Promise<void> => {
+export const deletePost = async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
   try {
-    const { id } = request.body;
+    const { id } = request.body as { id: string | number };
 
     if (!id) {
       reply.status(400).send({

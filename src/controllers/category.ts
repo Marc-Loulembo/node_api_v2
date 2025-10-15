@@ -56,9 +56,9 @@ export const getCategory = async (request: FastifyRequest<{ Params: { id: string
   }
 };
 
-export const createCategory = async (request: FastifyRequest<{ Body: CategoryRequestBody }>, reply: FastifyReply): Promise<any> => {
+export const createCategory = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
   try {
-    const categoryData = request.body;
+    const categoryData = request.body as CategoryRequestBody;
 
     // Validation des données
     const validation = await CategoryRepository.validateCategoryData(categoryData);
@@ -87,10 +87,10 @@ export const createCategory = async (request: FastifyRequest<{ Body: CategoryReq
   }
 };
 
-export const updateCategory = async (request: FastifyRequest<{ Params: { id: string }, Body: CategoryRequestBody }>, reply: FastifyReply): Promise<any> => {
+export const updateCategory = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
   try {
-    const { id } = request.params;
-    const categoryData = request.body;
+    const { id } = request.params as { id: string };
+    const categoryData = request.body as CategoryRequestBody;
 
     if (!id || isNaN(parseInt(id))) {
       return reply.status(400).send({
@@ -135,9 +135,9 @@ export const updateCategory = async (request: FastifyRequest<{ Params: { id: str
   }
 };
 
-export const deleteCategory = async (request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply): Promise<void> => {
+export const deleteCategory = async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
   try {
-    const { id } = request.params;
+    const { id } = request.params as { id: string };
 
     if (!id || isNaN(parseInt(id))) {
       reply.status(400).send({
@@ -165,10 +165,10 @@ export const deleteCategory = async (request: FastifyRequest<{ Params: { id: str
   }
 };
 
-export const getCategoryPosts = async (request: FastifyRequest<{ Params: { id: string }, Querystring: CategoryQueryParams }>, reply: FastifyReply): Promise<any> => {
+export const getCategoryPosts = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
   try {
-    const { id } = request.params;
-    const { page = '1', limit = '10' } = request.query;
+    const { id } = request.params as { id: string };
+    const { page = '1', limit = '10' } = request.query as CategoryQueryParams;
 
     if (!id || isNaN(parseInt(id))) {
       return reply.status(400).send({
