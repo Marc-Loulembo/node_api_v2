@@ -8,6 +8,3 @@ export * from './AuthDtos';
 
 // DTOs pour les routes CSRF
 export * from './CsrfDtos';
-
-// DTOs pour les routes de profil
-export * from './ProfileDtos';

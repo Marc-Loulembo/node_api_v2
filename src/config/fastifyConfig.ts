@@ -1,5 +1,6 @@
 import Fastify, { FastifyInstance, FastifyServerOptions } from "fastify";
 import { FastifyConfig } from '../types/index.js';
+import Ajv from 'ajv';
 
 export const fastify: FastifyInstance = Fastify({
   logger: {
@@ -33,7 +34,8 @@ export const fastify: FastifyInstance = Fastify({
         ],
       }
     }
-  }
+  },
+  ajv: new Ajv({ removeAdditional: true }),
 } as FastifyServerOptions);
 
 
