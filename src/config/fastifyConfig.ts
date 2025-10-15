@@ -1,40 +1,47 @@
-import Fastify, { FastifyInstance, FastifyServerOptions } from "fastify";
+import Fastify, { FastifyInstance, FastifyLoggerOptions, FastifyServerOptions } from "fastify";
 import { FastifyConfig } from '../types/index.js';
-import Ajv from 'ajv';
 
-export const fastify: FastifyInstance = Fastify({
-  logger: {
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        // Options de formatage
-        colorize: true,           // Couleurs dans la console
-        translateTime: 'HH:MM:ss', // Format de l'horodatage
-        ignore: 'pid,hostname',    // Champs à ignorer
-        singleLine: false,         // Une ligne par log
-        hideObject: false,         // Masquer les objets
-        messageFormat: '{msg}',    // Format du message
+const developmentLogger = {
+  transport: {
+    target: 'pino-pretty',
+    options: {
+      // Options de formatage
+      colorize: true,           // Couleurs dans la console
+      translateTime: 'HH:MM:ss', // Format de l'horodatage
+      ignore: 'pid,hostname',    // Champs à ignorer
+      singleLine: false,         // Une ligne par log
+      hideObject: false,         // Masquer les objets
+      messageFormat: '{msg}',    // Format du message
 
-        // Options de filtrage
-        levelFirst: false,         // Niveau en premier
-        messageKey: 'msg',         // Clé du message
-        timestampKey: 'time',      // Clé du timestamp
+      // Options de filtrage
+      levelFirst: false,         // Niveau en premier
+      messageKey: 'msg',         // Clé du message
+      timestampKey: 'time',      // Clé du timestamp
 
-        // Options de couleur
-        colorizeObjects: true,     // Couleurs pour les objets
-        useLevelLabels: true,      // Utiliser les labels de niveau
-        levelLabel: 'levelLabel',  // Clé du label de niveau
+      // Options de couleur
+      colorizeObjects: true,     // Couleurs pour les objets
+      useLevelLabels: true,      // Utiliser les labels de niveau
+      levelLabel: 'levelLabel',  // Clé du label de niveau
 
-        // Options de formatage avancées
-        crlf: false,              // Utiliser CRLF au lieu de LF
-        errorLikeObjectKeys: [    // Clés d'erreur
-          'err',
-          'error',
-          'errorLikeObjectKeys'
-        ],
-      }
+      // Options de formatage avancées
+      crlf: false,              // Utiliser CRLF au lieu de LF
+      errorLikeObjectKeys: [    // Clés d'erreur
+        'err',
+        'error',
+        'errorLikeObjectKeys'
+      ],
     }
   },
+} as FastifyLoggerOptions;
+
+const productionLogger = {
+  logger: false
+} as FastifyLoggerOptions;
+
+const logger = (process.env.NODE_ENV === 'development' || !process.env.NODE_ENV) ? developmentLogger : productionLogger;
+
+export const fastify: FastifyInstance = Fastify({
+  logger: { ...logger },
   ajv: {
     customOptions: {
       removeAdditional: true,       // Supprime les propriétés supplémentaires
