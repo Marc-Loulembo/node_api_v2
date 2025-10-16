@@ -26,6 +26,9 @@ export const startServer = async (): Promise<void> => {
     // Enregistrer les handlers d'erreurs et 404
     registerErrorHandlers(fastify);
 
+    const PORT = Number(process.env.PORT) || fastifyConfig.port || 8080;
+    const HOST = '0.0.0.0';
+
     fastify.listen(fastifyConfig, (err: Error | null) => {
       if (err) {
         fastify.log.error(err);
