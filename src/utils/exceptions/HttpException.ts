@@ -5,7 +5,9 @@ export class HttpException extends Error {
   constructor(statusCode: number, message: string, code?: string) {
     super(message);
     this.statusCode = statusCode;
-    this.code = code;
+    if (code !== undefined) {
+      this.code = code;
+    }
   }
 }
 
