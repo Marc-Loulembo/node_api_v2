@@ -82,5 +82,8 @@ export const swaggerConfig = {
 
 
 export const fastifyConfig: FastifyConfig = {
-  port: process.env.API_PORT ? parseInt(process.env.API_PORT) : 3001,
+  // Clever fournit PORT; on accepte aussi API_PORT pour compatibilité locale
+  port: process.env.API_PORT ? parseInt(process.env.API_PORT) : (process.env.PORT ? parseInt(process.env.PORT) : 3001),
+  // En prod (PaaS), il faut écouter sur 0.0.0.0
+  host: '0.0.0.0' as any,
 };
