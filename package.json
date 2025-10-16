@@ -10,7 +10,7 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:seed": "tsx src/seeders/seed.js",
-    "postinstall": "npx prisma generate &&dotenv -e .env.production -- npx prisma migrate deploy"
+    "postinstall": "npx prisma generate && dotenv -e .env.production -- npx prisma migrate deploy && npm run build"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.2",
