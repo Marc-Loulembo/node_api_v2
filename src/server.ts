@@ -2,6 +2,7 @@ import { fastify, fastifyConfig } from "./config/fastifyConfig.js";
 import { registerPlugins } from "./config/plugins.js";
 import { registerSwagger } from "./config/swagger.js";
 import { autoLoadRoutes } from "./utils/autoLoad.js";
+import { registerErrorHandlers } from "./utils/exceptions/errorHandler.js";
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -21,6 +22,9 @@ export const startServer = async (): Promise<void> => {
     const count = await autoLoadRoutes(routesDir);
     fastify.log.info(`🚀 ${count} routes loaded`);
     fastify.log.info(`📚 Documentation disponible sur http://localhost:${fastifyConfig.port}/documentation`);
+
+    // Enregistrer les handlers d'erreurs et 404
+    registerErrorHandlers(fastify);
 
     fastify.listen(fastifyConfig, (err: Error | null) => {
       if (err) {

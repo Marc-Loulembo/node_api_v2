@@ -1,11 +1,13 @@
 import { readdir, stat } from 'fs/promises';
 import { join, extname } from 'path';
+import { pathToFileURL } from 'url';
 
 export async function autoLoadRoutes(routesDir: string): Promise<number> {
   const files = await getFiles(routesDir);
 
   for (const file of files) {
-    await import(`file://${file}`);
+    // Utiliser une URL de fichier valide (corrige les chemins Windows)
+    await import(pathToFileURL(file).href);
   }
 
   return files.length;

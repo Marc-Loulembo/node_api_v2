@@ -32,20 +32,32 @@ async function main() {
 
   console.log('👥 Users created:', users.length);
 
-  // Créer des posts
+  // Créer une catégorie par défaut si nécessaire
+  const category = await prisma.category.upsert({
+    where: { name: 'Général' },
+    update: {},
+    create: {
+      name: 'Général',
+      description: 'Catégorie par défaut',
+    },
+  });
+
+  // Créer des posts en liant les relations requises
   const posts = await Promise.all([
     prisma.post.create({
       data: {
         title: 'Premier post',
         content: 'Contenu du premier post',
-        authorId: users[0].id,
+        authors: { connect: { id: users[0].id } },
+        category: { connect: { id: category.id } },
       },
     }),
     prisma.post.create({
       data: {
         title: 'Deuxième post',
         content: 'Contenu du deuxième post',
-        authorId: users[1].id,
+        authors: { connect: { id: users[1].id } },
+        category: { connect: { id: category.id } },
       },
     }),
   ]);

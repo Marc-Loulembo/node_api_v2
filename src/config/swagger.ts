@@ -1,12 +1,26 @@
 import { FastifyInstance } from 'fastify';
-import { swaggerConfig } from './fastifyConfig.js';
+import { swaggerConfig, fastifyConfig } from './fastifyConfig.js';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 
 export const registerSwagger = async (fastify: FastifyInstance) => {
   try {
+    // Construire dynamiquement l'URL du serveur en fonction du port configuré
+    const dynamicSwaggerConfig = {
+      ...swaggerConfig,
+      openapi: {
+        ...swaggerConfig.openapi,
+        servers: [
+          {
+            url: `http://localhost:${fastifyConfig.port}`,
+            description: 'Serveur de développement'
+          }
+        ]
+      }
+    };
+
     // Enregistrer le plugin Swagger
-    await fastify.register(swagger, swaggerConfig);
+    await fastify.register(swagger, dynamicSwaggerConfig as any);
 
     // Enregistrer le plugin Swagger UI
     await fastify.register(swaggerUi, {
